@@ -571,21 +571,39 @@
 
     .form-group {
       margin-bottom: 1.5rem;
+      position: relative;
     }
 
     .form-group label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
+      color: var(--text-color);
     }
 
     .form-group input,
     .form-group textarea {
       width: 100%;
       padding: 0.75rem;
-      border: 1px solid #ddd;
+      border: 2px solid #e2e8f0;
       border-radius: 5px;
       font-family: inherit;
+      font-size: 1rem;
+      background: #ffffff;
+      transition: all 0.3s ease;
+      color: var(--text-color);
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-group input:hover,
+    .form-group textarea:hover {
+      border-color: #cbd5e1;
     }
 
     .btn {
@@ -596,11 +614,21 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      width: 100%;
     }
 
     .btn:hover {
       background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
     }
 
     /* Responsive Design */
@@ -1116,7 +1144,656 @@
         overflow-y: auto;
       }
     }
+
+    /* Game Menu Styles */
+    .game-menu {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+    }
+
+    .game-toggle {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .game-toggle i {
+      color: white;
+      font-size: 24px;
+    }
+
+    .game-toggle:hover {
+      transform: scale(1.1);
+      background: var(--secondary-color);
+    }
+
+    .games-container {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      display: none;
+      z-index: 999;
+    }
+
+    .games-container.active {
+      display: block;
+    }
+
+    .game-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .game-tab {
+      padding: 8px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .game-tab.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .game-content {
+      display: none;
+    }
+
+    .game-content.active {
+      display: block;
+    }
+
+    /* Tic Tac Toe Styles */
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .cell {
+      width: 100%;
+      aspect-ratio: 1;
+      background: white;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .cell:hover:empty {
+      background: rgba(37, 99, 235, 0.1);
+      transform: scale(1.05);
+    }
+
+    .cell[data-value="X"] {
+      color: var(--primary-color);
+    }
+
+    .cell[data-value="O"] {
+      color: var(--secondary-color);
+    }
+
+    .game-status {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    /* Snake Game Styles */
+    .snake-game {
+      width: 280px;
+      height: 280px;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      margin: 0 auto;
+    }
+
+    /* Code Invaders Styles */
+    .invaders-game {
+      width: 280px;
+      height: 280px;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      background: #000;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .player-ship {
+      width: 30px;
+      height: 20px;
+      background: var(--primary-color);
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 4px;
+    }
+
+    .invader {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background: #ef4444;
+      border-radius: 4px;
+    }
+
+    .laser {
+      width: 2px;
+      height: 10px;
+      background: #22c55e;
+      position: absolute;
+    }
+
+    /* Hangman Styles */
+    .hangman-container {
+      text-align: center;
+    }
+
+    .hangman-word {
+      font-size: 24px;
+      letter-spacing: 8px;
+      margin: 20px 0;
+      font-family: monospace;
+      min-height: 36px;
+    }
+
+    .hangman-letters {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin: 15px 0;
+    }
+
+    .letter-btn {
+      padding: 5px;
+      border: 1px solid var(--primary-color);
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .letter-btn:hover:not(:disabled) {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .letter-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .game-score {
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .game-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .game-controls button {
+      flex: 1;
+      padding: 8px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .game-controls button:hover {
+      background: var(--secondary-color);
+    }
+
+    @keyframes highScorePulse {
+      0% { transform: scale(1); color: var(--text-color); }
+      50% { transform: scale(1.2); color: var(--primary-color); }
+      100% { transform: scale(1); color: var(--text-color); }
+    }
+    #snake-high-score {
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    /* 3D Parallax Background */
+    .parallax-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .parallax-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .layer-1 { background: radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.05) 0%, transparent 70%); }
+    .layer-2 { background: radial-gradient(circle at 70% 60%, rgba(37, 99, 235, 0.05) 0%, transparent 70%); }
+    .layer-3 { background: radial-gradient(circle at 40% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 70%); }
+
+    /* Skill Progress Animation */
+    .skill-progress {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--primary-color);
+      border-radius: 3px;
+      transform: translateX(-100%);
+      transition: transform 1s ease;
+    }
+
+    .skill-card.visible .progress-bar {
+      transform: translateX(0);
+    }
+
+    /* Typing Animation */
+    .typing-text {
+      border-right: 2px solid var(--primary-color);
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--primary-color) }
+    }
+
+    /* Project Card Hover Effects */
+    .project-card {
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+
+    .project-card:hover {
+      transform: rotateY(10deg) rotateX(5deg);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(37, 99, 235, 0.1),
+        transparent
+      );
+      transform: translateZ(-1px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Scroll Progress Indicator */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1001;
+    }
+
+    .progress-bar-scroll {
+      height: 100%;
+      background: var(--primary-color);
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-color);
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* Dark Theme Colors */
+    [data-theme="dark"] {
+      --primary-color: #60a5fa;
+      --secondary-color: #3b82f6;
+      --text-color: #e5e7eb;
+      --bg-color: #111827;
+      --accent-color: #1f2937;
+    }
+
+    [data-theme="dark"] body {
+      background: linear-gradient(
+        135deg, 
+        #0f172a 0%,
+        #1e293b 50%,
+        #0f172a 100%
+      );
+    }
+
+    [data-theme="dark"] .navbar {
+      background-color: rgba(17, 24, 39, 0.95);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .nav-links a {
+      color: #e5e7eb;
+    }
+
+    [data-theme="dark"] .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    [data-theme="dark"] .hero {
+      background: linear-gradient(135deg, #1e293b 0%, #111827 100%);
+    }
+
+    [data-theme="dark"] .skill-card,
+    [data-theme="dark"] .project-card,
+    [data-theme="dark"] .about-content,
+    [data-theme="dark"] .research-section,
+    [data-theme="dark"] .contact-form,
+    [data-theme="dark"] .games-container {
+      background: rgba(31, 41, 55, 0.95);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    [data-theme="dark"] .skill-progress {
+      background: #374151;
+    }
+
+    [data-theme="dark"] .cell {
+      background: #1f2937;
+      border-color: var(--primary-color);
+    }
+
+    [data-theme="dark"] .cell:hover:empty {
+      background: rgba(96, 165, 250, 0.1);
+    }
+
+    [data-theme="dark"] .game-tab {
+      background: #374151;
+      color: #e5e7eb;
+    }
+
+    [data-theme="dark"] .game-tab.active {
+      background: var(--primary-color);
+    }
+
+    [data-theme="dark"] .snake-game {
+      border-color: var(--primary-color);
+      background: #1f2937;
+    }
+
+    [data-theme="dark"] .project-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(37, 99, 235, 0.95),
+        rgba(30, 64, 175, 0.98)
+      );
+    }
+
+    [data-theme="dark"] .resource-link {
+      background: rgba(96, 165, 250, 0.1);
+      color: var(--primary-color);
+    }
+
+    [data-theme="dark"] .resource-link:hover {
+      background: var(--primary-color);
+      color: #111827;
+    }
+
+    [data-theme="dark"] .social-link {
+      background: rgba(31, 41, 55, 0.95);
+      color: #e5e7eb;
+    }
+
+    [data-theme="dark"] .form-group input,
+    [data-theme="dark"] .form-group textarea {
+      background: #1f2937;
+      border-color: #374151;
+      color: #e5e7eb;
+    }
+
+    [data-theme="dark"] .form-group input:focus,
+    [data-theme="dark"] .form-group textarea:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    }
+
+    [data-theme="dark"] .letter-btn {
+      background: #1f2937;
+      border-color: var(--primary-color);
+      color: #e5e7eb;
+    }
+
+    [data-theme="dark"] .letter-btn:hover:not(:disabled) {
+      background: var(--primary-color);
+      color: #111827;
+    }
+
+    [data-theme="dark"] .about-quote {
+      background: rgba(96, 165, 250, 0.1);
+    }
+
+    [data-theme="dark"] .parallax-layer {
+      opacity: 0.5;
+    }
+
+    /* Theme Toggle Animation */
+    .theme-toggle {
+      overflow: hidden;
+    }
+
+    .theme-toggle i {
+      transform-origin: center;
+      transition: all 0.5s ease;
+    }
+
+    .theme-toggle:active i {
+      transform: rotate(180deg);
+    }
+
+    [data-theme="dark"] .theme-toggle {
+      background: #1f2937;
+      border-color: var(--primary-color);
+    }
+
+    /* Loading Animation */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--accent-color);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Mobile Game Menu Enhancements */
+    @media screen and (max-width: 768px) {
+      .game-menu {
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .games-container {
+        position: fixed;
+        bottom: 90px;
+        right: 10px;
+        width: calc(100% - 20px);
+        max-width: 350px;
+        margin: 0 10px;
+        border-radius: 15px;
+      }
+
+      .game-toggle {
+        width: 50px;
+        height: 50px;
+      }
+
+      .snake-game {
+        width: 100%;
+        height: 260px;
+        touch-action: none;
+      }
+
+      #snakeCanvas {
+        width: 100%;
+        height: 260px;
+        touch-action: none;
+      }
+
+      .game-controls {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      /* Mobile Touch Controls */
+      .touch-controls {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 5px;
+        margin-top: 15px;
+        touch-action: none;
+      }
+
+      .touch-btn {
+        padding: 15px;
+        background: rgba(37, 99, 235, 0.1);
+        border: none;
+        border-radius: 8px;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: none;
+      }
+
+      .touch-btn:active {
+        background: rgba(37, 99, 235, 0.2);
+      }
+
+      .touch-btn i {
+        font-size: 20px;
+      }
+
+      .touch-up { grid-area: 1 / 2 / 2 / 3; }
+      .touch-left { grid-area: 2 / 1 / 3 / 2; }
+      .touch-right { grid-area: 2 / 3 / 3 / 4; }
+      .touch-down { grid-area: 3 / 2 / 4 / 3; }
+    }
+
+    [data-theme="dark"] .touch-btn {
+      background: rgba(96, 165, 250, 0.1);
+      color: var(--primary-color);
+    }
+
+    [data-theme="dark"] .touch-btn:active {
+      background: rgba(96, 165, 250, 0.2);
+    }
   </style>
+  <!-- Add EmailJS Script -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      // Initialize EmailJS with your public key
+      emailjs.init("qtJnyYk-B_3ESvkA6");
+    })();
+  </script>
 </head>
 
 <body>
@@ -1182,9 +1859,24 @@
         <div class="skill-card" style="--mouse-x: 322.5px; --mouse-y: -1365.8125px;">
           <h3>Programming</h3>
           <ul class="skill-list">
-            <li>Python - Advanced</li>
-            <li>C++ - Intermediate</li>
-            <li>C - Intermediate</li>
+            <li>
+              Python - Advanced
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-20%)"></div>
+              </div>
+            </li>
+            <li>
+              C++ - Intermediate
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-40%)"></div>
+              </div>
+            </li>
+            <li>
+              C - Intermediate
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-40%)"></div>
+              </div>
+            </li>
           </ul>
           <div class="resource-links">
             <a href="https://www.python.org/doc/" target="_blank" class="resource-link">
@@ -1202,9 +1894,24 @@
         <div class="skill-card" style="--mouse-x: -45.5px; --mouse-y: -1365.8125px;">
           <h3>Problem Solving</h3>
           <ul class="skill-list">
-            <li>Data Structures</li>
-            <li>Algorithms</li>
-            <li>Competitive Programming</li>
+            <li>
+              Data Structures
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-25%)"></div>
+              </div>
+            </li>
+            <li>
+              Algorithms
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-30%)"></div>
+              </div>
+            </li>
+            <li>
+              Competitive Programming
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-35%)"></div>
+              </div>
+            </li>
           </ul>
           <div class="resource-links">
             <a href="https://leetcode.com/" target="_blank" class="resource-link">
@@ -1239,9 +1946,24 @@
         <div class="skill-card" style="--mouse-x: 322.5px; --mouse-y: -1807.125px;">
           <h3>Technical Skills</h3>
           <ul class="skill-list">
-            <li>Web Development</li>
-            <li>Machine Learning</li>
-            <li>IoT &amp; Embedded Systems</li>
+            <li>
+              Web Development
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-30%)"></div>
+              </div>
+            </li>
+            <li>
+              Machine Learning
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-45%)"></div>
+              </div>
+            </li>
+            <li>
+              IoT & Embedded Systems
+              <div class="skill-progress">
+                <div class="progress-bar" style="transform: translateX(-35%)"></div>
+              </div>
+            </li>
           </ul>
           <div class="resource-links">
             <a href="https://developer.mozilla.org/en-US/" target="_blank" class="resource-link">
@@ -1328,22 +2050,22 @@
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" style="--mouse-x: 34.102755026061054%; --mouse-y: -415.08511480601743%;">
+  <section id="contact">
     <div class="section-content">
       <h2 class="section-title">Contact Me</h2>
       <div class="contact-form">
-        <form id="contactForm">
+        <form id="contactForm" onsubmit="handleSubmit(event)">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" required="">
+            <input type="text" id="name" name="name" required placeholder="Enter your name">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" required="">
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
           </div>
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" rows="5" required=""></textarea>
+            <textarea id="message" name="message" rows="5" required placeholder="Enter your message"></textarea>
           </div>
           <button type="submit" class="btn">Send Message</button>
         </form>
@@ -1392,6 +2114,58 @@
     </div>
   </section>
 
+  <!-- Game Menu -->
+  <div class="game-menu">
+    <div class="game-toggle">
+      <i class="fas fa-gamepad"></i>
+    </div>
+    <div class="games-container">
+      <div class="game-tabs">
+        <button class="game-tab active" data-game="tictactoe">Tic Tac Toe</button>
+        <button class="game-tab" data-game="snake">Snake</button>
+      </div>
+
+      <!-- Tic Tac Toe -->
+      <div class="game-content active" id="tictactoe-game">
+        <div class="game-status">Player X's turn</div>
+        <div class="game-board">
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+          <div class="cell" data-cell></div>
+        </div>
+        <div class="game-controls">
+          <button class="reset-button">Reset Game</button>
+        </div>
+      </div>
+
+      <!-- Snake Game -->
+      <div class="game-content" id="snake-game">
+        <div class="game-score">
+          Score: <span id="snake-score">0</span>
+          <br>
+          High Score: <span id="snake-high-score">0</span>
+        </div>
+        <canvas id="snakeCanvas" width="260" height="260" class="snake-game"></canvas>
+        <div class="game-controls">
+          <button id="start-snake">Start</button>
+          <button id="pause-snake">Pause</button>
+        </div>
+        <div class="touch-controls">
+          <button class="touch-btn touch-up"><i class="fas fa-chevron-up"></i></button>
+          <button class="touch-btn touch-left"><i class="fas fa-chevron-left"></i></button>
+          <button class="touch-btn touch-right"><i class="fas fa-chevron-right"></i></button>
+          <button class="touch-btn touch-down"><i class="fas fa-chevron-down"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
     <p>© 2025 Mohammed Adnan. All rights reserved.</p>
@@ -1401,6 +2175,296 @@
   <div class="background-animation" id="particles"><div class="particle" style="width: 4.51414px; height: 4.51414px; left: 671.806px; top: 87.7914px; transform: translate(1038.42px, 587.588px);"></div><div class="particle" style="width: 3.45457px; height: 3.45457px; left: 720.263px; top: 394.628px; transform: translate(168.764px, 419.303px);"></div><div class="particle" style="width: 5.59661px; height: 5.59661px; left: 1116.77px; top: 334.893px; transform: translate(216.799px, 216.883px);"></div><div class="particle" style="width: 3.29078px; height: 3.29078px; left: 1345.57px; top: 107.265px; transform: translate(507.372px, 466.281px);"></div><div class="particle" style="width: 7.79875px; height: 7.79875px; left: 566.943px; top: 493.847px; transform: translate(1033.35px, 72.6797px);"></div><div class="particle" style="width: 4.75578px; height: 4.75578px; left: 1318.5px; top: 172.148px; transform: translate(42.9626px, 261.807px);"></div><div class="particle" style="width: 5.02039px; height: 5.02039px; left: 120.134px; top: 2.54861px; transform: translate(1214.19px, 545.016px);"></div><div class="particle" style="width: 5.43484px; height: 5.43484px; left: 1012.68px; top: 409.355px; transform: translate(524.024px, -2.97189px);"></div><div class="particle" style="width: 7.90667px; height: 7.90667px; left: 228.217px; top: 221.405px; transform: translate(823.705px, 340.392px);"></div><div class="particle" style="width: 4.06992px; height: 4.06992px; left: 1010.12px; top: 142.813px; transform: translate(421.874px, 321.213px);"></div><div class="particle" style="width: 3.35813px; height: 3.35813px; left: 1150.64px; top: 11.4466px; transform: translate(612.954px, 609.266px);"></div><div class="particle" style="width: 3.1552px; height: 3.1552px; left: 192.817px; top: 518.43px; transform: translate(402.433px, 138.104px);"></div><div class="particle" style="width: 4.75925px; height: 4.75925px; left: 971.885px; top: 264.566px; transform: translate(683.624px, 36.5818px);"></div><div class="particle" style="width: 3.97273px; height: 3.97273px; left: 1236.76px; top: 428.576px; transform: translate(1189.2px, 71.2063px);"></div><div class="particle" style="width: 3.89065px; height: 3.89065px; left: 661.571px; top: 549.582px; transform: translate(478.898px, 35.8915px);"></div><div class="particle" style="width: 3.53986px; height: 3.53986px; left: 1068.32px; top: 428.304px; transform: translate(1273.15px, 271.281px);"></div><div class="particle" style="width: 6.10258px; height: 6.10258px; left: 283.836px; top: 362.234px; transform: translate(706.853px, 380.049px);"></div><div class="particle" style="width: 3.02688px; height: 3.02688px; left: 451.863px; top: 433.757px; transform: translate(306.301px, 161.506px);"></div><div class="particle" style="width: 5.68825px; height: 5.68825px; left: 788.717px; top: 437.931px; transform: translate(1100.06px, 607.675px);"></div><div class="particle" style="width: 7.13072px; height: 7.13072px; left: 293.71px; top: 344.432px; transform: translate(408.096px, 108.893px);"></div><div class="particle" style="width: 3.15254px; height: 3.15254px; left: 547.34px; top: 318.075px; transform: translate(788.643px, 517.539px);"></div><div class="particle" style="width: 5.19619px; height: 5.19619px; left: 1104.79px; top: 37.2097px; transform: translate(1250.89px, 304.215px);"></div><div class="particle" style="width: 7.51364px; height: 7.51364px; left: 688.752px; top: 536.054px; transform: translate(666.68px, 178.998px);"></div><div class="particle" style="width: 5.47556px; height: 5.47556px; left: 550.889px; top: 80.5875px; transform: translate(826.466px, 102.375px);"></div><div class="particle" style="width: 4.80425px; height: 4.80425px; left: 253.052px; top: 235.327px; transform: translate(137.184px, 454.778px);"></div><div class="particle" style="width: 3.98708px; height: 3.98708px; left: 306.406px; top: 552.67px; transform: translate(150.985px, 422.184px);"></div><div class="particle" style="width: 3.79927px; height: 3.79927px; left: 301.68px; top: 559.188px; transform: translate(54.0621px, 456.276px);"></div><div class="particle" style="width: 5.95923px; height: 5.95923px; left: 1100.5px; top: 246.194px; transform: translate(1262.57px, 210.027px);"></div><div class="particle" style="width: 6.67106px; height: 6.67106px; left: 1294.75px; top: 540.956px; transform: translate(1055.82px, 514.841px);"></div><div class="particle" style="width: 5.01096px; height: 5.01096px; left: 81.329px; top: 242.235px; transform: translate(171.731px, 122.442px);"></div><div class="particle" style="width: 3.07104px; height: 3.07104px; left: 1166.55px; top: 349.237px; transform: translate(1070.17px, 160.734px);"></div><div class="particle" style="width: 6.4453px; height: 6.4453px; left: 895.465px; top: 110.907px; transform: translate(1028.89px, 205.268px);"></div><div class="particle" style="width: 4.6313px; height: 4.6313px; left: 222.589px; top: 203.849px; transform: translate(115.792px, 231.534px);"></div><div class="particle" style="width: 5.71287px; height: 5.71287px; left: 1155.15px; top: 168.734px; transform: translate(1074.39px, 295.761px);"></div><div class="particle" style="width: 4.32629px; height: 4.32629px; left: 833.306px; top: 360.178px; transform: translate(716.787px, 460.737px);"></div><div class="particle" style="width: 5.29324px; height: 5.29324px; left: 261.824px; top: 347.653px; transform: translate(130.168px, 349.023px);"></div><div class="particle" style="width: 4.21796px; height: 4.21796px; left: 754.907px; top: 314.455px; transform: translate(731.82px, 406.412px);"></div><div class="particle" style="width: 4.81741px; height: 4.81741px; left: 163.852px; top: 133.408px; transform: translate(129.846px, 115.318px);"></div><div class="particle" style="width: 4.12635px; height: 4.12635px; left: 940.665px; top: 522.748px; transform: translate(1010.23px, 504.911px);"></div><div class="particle" style="width: 5.06012px; height: 5.06012px; left: 389.845px; top: 467.765px; transform: translate(430.536px, 483.81px);"></div><div class="particle" style="width: 4.61438px; height: 4.61438px; left: 1023.38px; top: 440.185px; transform: translate(991.942px, 430.509px);"></div><div class="particle" style="width: 3.39565px; height: 3.39565px; left: 309.11px; top: 466.17px; transform: translate(311.143px, 478.752px);"></div><div class="particle" style="width: 5.33492px; height: 5.33492px; left: 1232.54px; top: 587.464px; transform: translate(1240.58px, 589.248px);"></div></div>
 
   <script>
+    // Initialize all game functionality when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Game Menu Toggle
+      const gameToggle = document.querySelector('.game-toggle');
+      const gamesContainer = document.querySelector('.games-container');
+
+      if (gameToggle && gamesContainer) {
+        gameToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          gamesContainer.classList.toggle('active');
+        });
+
+        // Close games container when clicking outside
+        document.addEventListener('click', function(event) {
+          if (!gamesContainer.contains(event.target) && !gameToggle.contains(event.target)) {
+            gamesContainer.classList.remove('active');
+          }
+        });
+      }
+
+      // Game Tabs
+      const gameTabs = document.querySelectorAll('.game-tab');
+      const gameContents = document.querySelectorAll('.game-content');
+
+      gameTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          gameTabs.forEach(t => t.classList.remove('active'));
+          gameContents.forEach(c => c.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(`${tab.dataset.game}-game`).classList.add('active');
+        });
+      });
+
+      // Initialize games
+      initTicTacToe();
+      initSnakeGame();
+    });
+
+    // Tic Tac Toe Game Logic
+    function initTicTacToe() {
+      const cells = document.querySelectorAll('[data-cell]');
+      const gameStatus = document.querySelector('.game-status');
+      const resetButton = document.querySelector('.reset-button');
+      let currentPlayer = 'X';
+      let gameActive = true;
+      let gameState = ['', '', '', '', '', '', '', '', ''];
+
+      const winningCombinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+      ];
+
+      function handleCellClick(e) {
+        const cell = e.target;
+        const cellIndex = Array.from(cells).indexOf(cell);
+
+        if (gameState[cellIndex] !== '' || !gameActive) return;
+
+        gameState[cellIndex] = currentPlayer;
+        cell.textContent = currentPlayer;
+        cell.setAttribute('data-value', currentPlayer);
+
+        if (checkWin()) {
+          gameStatus.textContent = `Player ${currentPlayer} wins!`;
+          gameActive = false;
+          return;
+        }
+
+        if (checkDraw()) {
+          gameStatus.textContent = "It's a draw!";
+          gameActive = false;
+          return;
+        }
+
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        gameStatus.textContent = `Player ${currentPlayer}'s turn`;
+      }
+
+      function checkWin() {
+        return winningCombinations.some(combination => {
+          return combination.every(index => {
+            return gameState[index] === currentPlayer;
+          });
+        });
+      }
+
+      function checkDraw() {
+        return gameState.every(cell => cell !== '');
+      }
+
+      function resetGame() {
+        gameState = ['', '', '', '', '', '', '', '', ''];
+        gameActive = true;
+        currentPlayer = 'X';
+        gameStatus.textContent = `Player ${currentPlayer}'s turn`;
+        cells.forEach(cell => {
+          cell.textContent = '';
+          cell.removeAttribute('data-value');
+        });
+      }
+
+      cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+      resetButton.addEventListener('click', resetGame);
+      resetGame();
+    }
+
+    // Snake Game Logic
+    function initSnakeGame() {
+      const canvas = document.getElementById('snakeCanvas');
+      const ctx = canvas.getContext('2d');
+      const startSnakeBtn = document.getElementById('start-snake');
+      const pauseSnakeBtn = document.getElementById('pause-snake');
+      const snakeScoreElement = document.getElementById('snake-score');
+      const snakeHighScoreElement = document.getElementById('snake-high-score');
+      const touchControls = document.querySelector('.touch-controls');
+
+      let snake = [{x: 10, y: 10}];
+      let food = {x: 15, y: 15};
+      let dx = 0;
+      let dy = 0;
+      let snakeScore = 0;
+      let highScore = localStorage.getItem('snakeHighScore') || 0;
+      let snakeGameLoop = null;
+      let isPaused = false;
+      let lastDirection = { dx: 0, dy: 0 };
+
+      // Prevent page scrolling during game
+      function preventScroll(e) {
+        if (e.key.startsWith('Arrow')) {
+          e.preventDefault();
+        }
+      }
+
+      // Add touch controls
+      function initTouchControls() {
+        const touchButtons = {
+          'touch-up': { dx: 0, dy: -1 },
+          'touch-down': { dx: 0, dy: 1 },
+          'touch-left': { dx: -1, dy: 0 },
+          'touch-right': { dx: 1, dy: 0 }
+        };
+
+        touchControls.querySelectorAll('.touch-btn').forEach(btn => {
+          ['touchstart', 'mousedown'].forEach(eventType => {
+            btn.addEventListener(eventType, (e) => {
+              e.preventDefault();
+              const direction = touchButtons[btn.classList[1]];
+              if (snakeGameLoop && 
+                  !(direction.dx === -lastDirection.dx && direction.dy === -lastDirection.dy)) {
+                dx = direction.dx;
+                dy = direction.dy;
+                lastDirection = { dx, dy };
+              }
+            });
+          });
+        });
+      }
+
+      // Display initial high score
+      snakeHighScoreElement.textContent = highScore;
+
+      function updateHighScore() {
+        if (snakeScore > highScore) {
+          highScore = snakeScore;
+          localStorage.setItem('snakeHighScore', highScore);
+          snakeHighScoreElement.textContent = highScore;
+          snakeHighScoreElement.style.animation = 'none';
+          snakeHighScoreElement.offsetHeight;
+          snakeHighScoreElement.style.animation = 'highScorePulse 0.5s ease';
+        }
+      }
+
+      // Add event listeners
+      document.addEventListener('keydown', preventScroll);
+      initTouchControls();
+
+      function drawSnakeGame() {
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#2563eb';
+        snake.forEach(segment => {
+          ctx.fillRect(segment.x * 10, segment.y * 10, 9, 9);
+        });
+
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(food.x * 10, food.y * 10, 9, 9);
+      }
+
+      function moveSnake() {
+        const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+        snake.unshift(head);
+
+        if (head.x === food.x && head.y === food.y) {
+          snakeScore += 10;
+          snakeScoreElement.textContent = snakeScore;
+          updateHighScore();
+          food = {
+            x: Math.floor(Math.random() * 26),
+            y: Math.floor(Math.random() * 26)
+          };
+        } else {
+          snake.pop();
+        }
+      }
+
+      function checkSnakeCollision() {
+        const head = snake[0];
+        return (
+          head.x < 0 || head.x >= 26 ||
+          head.y < 0 || head.y >= 26 ||
+          snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
+        );
+      }
+
+      function gameLoop() {
+        if (!isPaused) {
+          moveSnake();
+          if (checkSnakeCollision()) {
+            updateHighScore();
+            alert(`Game Over!\nScore: ${snakeScore}\nHigh Score: ${highScore}`);
+            resetSnakeGame();
+            return;
+          }
+          drawSnakeGame();
+        }
+      }
+
+      // Cleanup function
+      function cleanup() {
+        document.removeEventListener('keydown', preventScroll);
+      }
+
+      // Add cleanup on game reset
+      function resetSnakeGame() {
+        snake = [{x: 10, y: 10}];
+        food = {x: 15, y: 15};
+        dx = 0;
+        dy = 0;
+        lastDirection = { dx: 0, dy: 0 };
+        snakeScore = 0;
+        snakeScoreElement.textContent = snakeScore;
+        clearInterval(snakeGameLoop);
+        snakeGameLoop = null;
+        isPaused = false;
+        pauseSnakeBtn.textContent = 'Pause';
+        drawSnakeGame();
+      }
+
+      // Add CSS animation for high score
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes highScorePulse {
+          0% { transform: scale(1); color: var(--text-color); }
+          50% { transform: scale(1.2); color: var(--primary-color); }
+          100% { transform: scale(1); color: var(--text-color); }
+        }
+        #snake-high-score {
+          display: inline-block;
+          transition: all 0.3s ease;
+        }
+      `;
+      document.head.appendChild(style);
+
+      document.addEventListener('keydown', e => {
+        if (!snakeGameLoop) return;
+
+        switch(e.key) {
+          case 'ArrowUp': if (dy !== 1) { dx = 0; dy = -1; } break;
+          case 'ArrowDown': if (dy !== -1) { dx = 0; dy = 1; } break;
+          case 'ArrowLeft': if (dx !== 1) { dx = -1; dy = 0; } break;
+          case 'ArrowRight': if (dx !== -1) { dx = 1; dy = 0; } break;
+        }
+      });
+
+      startSnakeBtn.addEventListener('click', () => {
+        if (snakeGameLoop) return;
+        resetSnakeGame();
+        snakeGameLoop = setInterval(gameLoop, 100);
+      });
+
+      pauseSnakeBtn.addEventListener('click', () => {
+        isPaused = !isPaused;
+        pauseSnakeBtn.textContent = isPaused ? 'Resume' : 'Pause';
+      });
+
+      resetSnakeGame();
+    }
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -1539,11 +2603,48 @@
     });
 
     // Contact form handling
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Thank you for your message! I will get back to you soon.');
-      this.reset();
-    });
+    async function handleSubmit(event) {
+      event.preventDefault();
+      
+      // Get the form data
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData);
+      
+      // Show loading state
+      const submitButton = event.target.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      
+      try {
+        // Prepare the template parameters
+        const templateParams = {
+          from_name: data.name,
+          from_email: data.email,
+          message: data.message,
+          to_name: 'Mohammed Adnan'  // Add your name as recipient
+        };
+
+        console.log('Sending email with params:', templateParams);
+        
+        // Send email using EmailJS
+        const response = await emailjs.send(
+          'service_678qpi6',
+          'template_lk2tusg',
+          templateParams
+        );
+        
+        console.log('Email sent successfully:', response);
+        alert('Thank you for your message! I will get back to you soon.');
+        event.target.reset();
+      } catch (error) {
+        console.error('EmailJS Error:', error);
+        alert(`Failed to send message: ${error.text || error.message || 'Unknown error'}`);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    }
 
     // Mobile menu handling
     function setupMobileMenu() {
@@ -1625,4 +2726,104 @@
     });
   </script>
 
+  <!-- Add before closing body tag -->
+  <div class="parallax-background">
+    <div class="parallax-layer layer-1"></div>
+    <div class="parallax-layer layer-2"></div>
+    <div class="parallax-layer layer-3"></div>
+  </div>
+
+  <div class="scroll-progress">
+    <div class="progress-bar-scroll"></div>
+  </div>
+
+  <button class="theme-toggle">
+    <i class="fas fa-sun"></i>
+  </button>
+
+  <div class="loading-screen">
+    <div class="loader"></div>
+  </div>
+
+  <script>
+    // Parallax Effect
+    document.addEventListener('mousemove', e => {
+      const layers = document.querySelectorAll('.parallax-layer');
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+
+      layers.forEach((layer, i) => {
+        const depth = (i + 1) * 5;
+        const translateX = (mouseX - 0.5) * depth;
+        const translateY = (mouseY - 0.5) * depth;
+        layer.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
+      });
+    });
+
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.querySelector('.progress-bar-scroll').style.width = scrolled + '%';
+    });
+
+    // Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    
+    function updateTheme(theme) {
+      document.body.dataset.theme = theme;
+      themeToggle.innerHTML = theme === 'dark' ? 
+        '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+      localStorage.setItem('theme', theme);
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+      updateTheme(newTheme);
+    });
+
+    // Check system preference on load
+    const savedTheme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    updateTheme(savedTheme);
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem('theme')) {
+        updateTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+
+    // Skill Progress Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.skill-card').forEach(card => observer.observe(card));
+
+    // Loading Screen
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.loading-screen').classList.add('fade-out');
+      }, 1000);
+    });
+  </script>
+
 </body></html>
+
+
+
+
+
+
+
+
+
+
+
+
