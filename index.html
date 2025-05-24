@@ -265,6 +265,111 @@
       box-shadow: 0 8px 15px rgba(37, 211, 102, 0.4);
     }
 
+    /* Add email link styles */
+    .social-link.email {
+      color: #ea4335;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(45deg, #ea4335, #ff6b6b);
+      animation: pulse-email 2s infinite;
+    }
+
+    .social-link.email:hover {
+      background: linear-gradient(45deg, #ff6b6b, #ea4335);
+      color: white;
+      box-shadow: 0 0 20px rgba(234, 67, 53, 0.6);
+      transform: translateY(-5px) scale(1.1);
+      animation: none;
+    }
+
+    @keyframes pulse-email {
+      0% {
+        box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(234, 67, 53, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(234, 67, 53, 0);
+      }
+    }
+
+    .social-link.email::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .social-link.email:hover::before {
+      width: 150%;
+      height: 150%;
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .social-link.email i {
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .social-link.email:hover i {
+      transform: scale(1.2) rotate(360deg);
+      text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    /* Email icon shine effect */
+    .social-link.email::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255,255,255,0.1) 45%,
+        rgba(255,255,255,0.3) 50%,
+        rgba(255,255,255,0.1) 55%,
+        transparent 100%
+      );
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+    }
+
+    .social-link.email:hover::after {
+      animation: shine 1.5s ease forwards;
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) rotate(45deg);
+      }
+    }
+
+    /* Dark theme support */
+    [data-theme="dark"] .social-link.email {
+      background: linear-gradient(45deg, #ff6b6b, #ff8787);
+    }
+
+    [data-theme="dark"] .social-link.email:hover {
+      background: linear-gradient(45deg, #ff8787, #ff6b6b);
+      box-shadow: 0 0 25px rgba(255, 107, 107, 0.7);
+    }
+
     /* Sections */
     section {
       padding: 5rem 2rem;
@@ -795,11 +900,111 @@
 
     .particle {
       position: absolute;
-      background: var(--primary-color);
-      border-radius: 50%;
-      opacity: 0.1;
+      color: var(--primary-color);
+      font-family: 'Consolas', monospace;
+      opacity: 0.2;
       pointer-events: none;
-      transform: translate(-50%, -50%);
+      font-size: 18px;
+      white-space: nowrap;
+      transform-origin: center;
+    }
+
+    .particle.function {
+      animation: floatFunction 8s infinite;
+    }
+
+    .particle.data-structure {
+      animation: spinFloat 10s infinite;
+    }
+
+    .particle.algorithm {
+      animation: zigzag 12s infinite;
+    }
+
+    .particle.symbol {
+      animation: pulse 6s infinite;
+    }
+
+    .particle.binary {
+      animation: matrix 15s infinite linear;
+    }
+
+    @keyframes floatFunction {
+      0% {
+        transform: translateY(100vh) translateX(-50px);
+      }
+      50% {
+        transform: translateY(50vh) translateX(50px);
+      }
+      100% {
+        transform: translateY(0vh) translateX(-50px);
+      }
+    }
+
+    @keyframes spinFloat {
+      0% {
+        transform: translate(0, 100vh) rotate(0deg);
+      }
+      50% {
+        transform: translate(0, 50vh) rotate(180deg);
+      }
+      100% {
+        transform: translate(0, 0vh) rotate(360deg);
+      }
+    }
+
+    @keyframes zigzag {
+      0% {
+        transform: translate(0, 100vh);
+      }
+      25% {
+        transform: translate(100px, 75vh);
+      }
+      50% {
+        transform: translate(-100px, 50vh);
+      }
+      75% {
+        transform: translate(100px, 25vh);
+      }
+      100% {
+        transform: translate(-100px, 0vh);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1) translate(0, 100vh);
+        opacity: 0.2;
+      }
+      50% {
+        transform: scale(1.5) translate(0, 50vh);
+        opacity: 0.4;
+      }
+      100% {
+        transform: scale(1) translate(0, 0vh);
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes matrix {
+      0% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.3;
+      }
+      95% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+    }
+
+    [data-theme="dark"] .particle {
+      opacity: 0.3;
     }
 
     /* Section Enhancement */
@@ -1785,6 +1990,70 @@
     [data-theme="dark"] .touch-btn:active {
       background: rgba(96, 165, 250, 0.2);
     }
+
+    /* Game Mode Selector Styles */
+    .game-mode-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      justify-content: center;
+    }
+
+    .mode-btn {
+      padding: 8px 16px;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mode-btn.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .mode-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Gmail icon styles */
+    .social-link.gmail {
+      background: #ffffff;
+      color: #ea4335;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .social-link.gmail:hover {
+      background: #ea4335;
+      color: #ffffff;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(234, 67, 53, 0.4);
+    }
+
+    .social-link.gmail i {
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-link.gmail:hover i {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    /* Dark theme support for Gmail icon */
+    [data-theme="dark"] .social-link.gmail {
+      background: #2d2d2d;
+      color: #ea4335;
+    }
+
+    [data-theme="dark"] .social-link.gmail:hover {
+      background: #ea4335;
+      color: #1a1a1a;
+    }
   </style>
   <!-- Add EmailJS Script -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -1829,6 +2098,9 @@
         </a>
         <a href="https://wa.me/qr/U52K7OVOLMIVF1" target="_blank" class="social-link whatsapp">
           <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="mailto:muhammedadnan50007@gmail.com?subject=Hello%20Mohammed%20Adnan&body=Hi%20Adnan%2C%0A%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you.%0A%0ABest%20regards%2C%0A" class="social-link gmail" title="Send me an email" onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=muhammedadnan50007@gmail.com&su=Hello%20Mohammed%20Adnan&body=Hi%20Adnan%2C%0A%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you.%0A%0ABest%20regards%2C%0A', '_blank'); return false;">
+          <i class="fas fa-envelope"></i>
         </a>
       </div>
     </div>
@@ -2127,6 +2399,10 @@
 
       <!-- Tic Tac Toe -->
       <div class="game-content active" id="tictactoe-game">
+        <div class="game-mode-selector">
+          <button class="mode-btn active" data-mode="pvp">Player vs Player</button>
+          <button class="mode-btn" data-mode="ai">Player vs AI</button>
+        </div>
         <div class="game-status">Player X's turn</div>
         <div class="game-board">
           <div class="cell" data-cell></div>
@@ -2218,9 +2494,11 @@
       const cells = document.querySelectorAll('[data-cell]');
       const gameStatus = document.querySelector('.game-status');
       const resetButton = document.querySelector('.reset-button');
+      const modeBtns = document.querySelectorAll('.mode-btn');
       let currentPlayer = 'X';
       let gameActive = true;
       let gameState = ['', '', '', '', '', '', '', '', ''];
+      let isAIMode = false;
 
       const winningCombinations = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -2228,23 +2506,127 @@
         [0, 4, 8], [2, 4, 6]
       ];
 
+      // AI Logic using Minimax algorithm
+      function minimax(board, depth, isMaximizing) {
+        const winner = checkWinnerForAI(board);
+        
+        if (winner === 'O') return 10 - depth;
+        if (winner === 'X') return depth - 10;
+        if (isBoardFull(board)) return 0;
+
+        if (isMaximizing) {
+          let bestScore = -Infinity;
+          for (let i = 0; i < 9; i++) {
+            if (board[i] === '') {
+              board[i] = 'O';
+              const score = minimax(board, depth + 1, false);
+              board[i] = '';
+              bestScore = Math.max(score, bestScore);
+            }
+          }
+          return bestScore;
+        } else {
+          let bestScore = Infinity;
+          for (let i = 0; i < 9; i++) {
+            if (board[i] === '') {
+              board[i] = 'X';
+              const score = minimax(board, depth + 1, true);
+              board[i] = '';
+              bestScore = Math.min(score, bestScore);
+            }
+          }
+          return bestScore;
+        }
+      }
+
+      function getBestMove() {
+        let bestScore = -Infinity;
+        let bestMove;
+
+        for (let i = 0; i < 9; i++) {
+          if (gameState[i] === '') {
+            gameState[i] = 'O';
+            const score = minimax(gameState, 0, false);
+            gameState[i] = '';
+            if (score > bestScore) {
+              bestScore = score;
+              bestMove = i;
+            }
+          }
+        }
+
+        return bestMove;
+      }
+
+      function makeAIMove() {
+        if (!gameActive || currentPlayer === 'X') return;
+        
+        const bestMove = getBestMove();
+        if (bestMove !== undefined) {
+          setTimeout(() => {
+            handleCellPlayed(cells[bestMove], bestMove);
+            handleResultValidation();
+          }, 500); // Add delay for better UX
+        }
+      }
+
+      function checkWinnerForAI(board) {
+        for (const combination of winningCombinations) {
+          if (
+            board[combination[0]] &&
+            board[combination[0]] === board[combination[1]] &&
+            board[combination[0]] === board[combination[2]]
+          ) {
+            return board[combination[0]];
+          }
+        }
+        return null;
+      }
+
+      function isBoardFull(board) {
+        return board.every(cell => cell !== '');
+      }
+
       function handleCellClick(e) {
         const cell = e.target;
         const cellIndex = Array.from(cells).indexOf(cell);
 
-        if (gameState[cellIndex] !== '' || !gameActive) return;
+        if (gameState[cellIndex] !== '' || !gameActive || (isAIMode && currentPlayer === 'O')) return;
 
-        gameState[cellIndex] = currentPlayer;
+        handleCellPlayed(cell, cellIndex);
+        handleResultValidation();
+
+        if (isAIMode && gameActive) {
+          makeAIMove();
+        }
+      }
+
+      function handleCellPlayed(cell, index) {
+        gameState[index] = currentPlayer;
         cell.textContent = currentPlayer;
         cell.setAttribute('data-value', currentPlayer);
+      }
 
-        if (checkWin()) {
+      function handleResultValidation() {
+        let roundWon = false;
+        for (const combination of winningCombinations) {
+          if (
+            gameState[combination[0]] &&
+            gameState[combination[0]] === gameState[combination[1]] &&
+            gameState[combination[0]] === gameState[combination[2]]
+          ) {
+            roundWon = true;
+            break;
+          }
+        }
+
+        if (roundWon) {
           gameStatus.textContent = `Player ${currentPlayer} wins!`;
           gameActive = false;
           return;
         }
 
-        if (checkDraw()) {
+        if (gameState.every(cell => cell !== '')) {
           gameStatus.textContent = "It's a draw!";
           gameActive = false;
           return;
@@ -2252,18 +2634,6 @@
 
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         gameStatus.textContent = `Player ${currentPlayer}'s turn`;
-      }
-
-      function checkWin() {
-        return winningCombinations.some(combination => {
-          return combination.every(index => {
-            return gameState[index] === currentPlayer;
-          });
-        });
-      }
-
-      function checkDraw() {
-        return gameState.every(cell => cell !== '');
       }
 
       function resetGame() {
@@ -2275,7 +2645,21 @@
           cell.textContent = '';
           cell.removeAttribute('data-value');
         });
+
+        if (isAIMode && currentPlayer === 'O') {
+          makeAIMove();
+        }
       }
+
+      // Mode selection handling
+      modeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          modeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          isAIMode = btn.dataset.mode === 'ai';
+          resetGame();
+        });
+      });
 
       cells.forEach(cell => cell.addEventListener('click', handleCellClick));
       resetButton.addEventListener('click', resetGame);
@@ -2811,6 +3195,87 @@
       setTimeout(() => {
         document.querySelector('.loading-screen').classList.add('fade-out');
       }, 1000);
+    });
+  </script>
+
+  <script>
+    // Background Animation
+    function createParticles() {
+      const container = document.getElementById('particles');
+      
+      const components = {
+        function: [
+          'function()', 'async/await', 'Promise.then()',
+          'callback()', 'return value', 'yield*',
+          'constructor()', 'super()', 'this.state'
+        ],
+        'data-structure': [
+          'Array[]', 'LinkedList', 'Stack<T>',
+          'Queue<T>', 'Tree<T>', 'Graph<V,E>',
+          'HashMap<K,V>', 'Heap[]', 'Set{}'
+        ],
+        algorithm: [
+          'QuickSort', 'BFS/DFS', 'Dijkstra',
+          'Dynamic Programming', 'Recursion',
+          'Binary Search', 'Merge Sort'
+        ],
+        symbol: [
+          '{ }', '[ ]', '( )',
+          '=>', '+=', '||',
+          '&&', '!=', '==='
+        ],
+        binary: [
+          '01001', '10101', '11000',
+          'ASCII', 'UTF-8', 'Unicode',
+          'Buffer', 'Stream', 'Byte'
+        ]
+      };
+
+      function createParticle(type) {
+        const particle = document.createElement('div');
+        particle.className = `particle ${type}`;
+        
+        // Get random element from the type's array
+        const elements = components[type];
+        particle.textContent = elements[Math.floor(Math.random() * elements.length)];
+        
+        // Random horizontal position
+        particle.style.left = `${Math.random() * window.innerWidth}px`;
+        
+        container.appendChild(particle);
+        
+        // Remove particle after animation
+        const duration = {
+          function: 8000,
+          'data-structure': 10000,
+          algorithm: 12000,
+          symbol: 6000,
+          binary: 15000
+        }[type];
+        
+        setTimeout(() => {
+          container.removeChild(particle);
+        }, duration);
+      }
+
+      // Create initial particles
+      Object.keys(components).forEach(type => {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => createParticle(type), Math.random() * 3000);
+        }
+      });
+
+      // Continuously create new particles
+      setInterval(() => {
+        const types = Object.keys(components);
+        const randomType = types[Math.floor(Math.random() * types.length)];
+        createParticle(randomType);
+      }, 1000);
+    }
+
+    // Initialize particles when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
     });
   </script>
 
