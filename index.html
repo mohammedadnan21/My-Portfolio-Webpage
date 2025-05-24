@@ -2046,26 +2046,363 @@
 
     /* Dark theme support for Gmail icon */
     [data-theme="dark"] .social-link.gmail {
-      background: #2d2d2d;
-      color: #ea4335;
+      background: rgba(31, 41, 55, 0.95);
+      color: #e5e7eb;
+      border: none;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
     }
 
     [data-theme="dark"] .social-link.gmail:hover {
-      background: #ea4335;
-      color: #1a1a1a;
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(37, 99, 235, 0.4);
+    }
+
+    [data-theme="dark"] .social-link.gmail i {
+      text-shadow: none;
+    }
+
+    [data-theme="dark"] .social-link.gmail:hover i {
+      transform: scale(1.2) rotate(5deg);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Screenshot Warning Modal Styles */
+    .screenshot-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 999999;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .screenshot-modal-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ff3b3b;
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      animation: dropIn 0.5s ease-out;
+      max-width: 90%;
+      width: 400px;
+    }
+
+    .screenshot-modal-content h2 {
+      font-size: 24px;
+      margin: 0 0 15px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .screenshot-modal-content p {
+      font-size: 16px;
+      margin: 0 0 20px 0;
+      line-height: 1.5;
+    }
+
+    .screenshot-modal-content button {
+      background: white;
+      color: #ff3b3b;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .screenshot-modal-content button:hover {
+      background: #ffeded;
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes dropIn {
+      from {
+        transform: translate(-50%, -70%);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translate(-50%, -50%); }
+      10%, 30%, 50%, 70%, 90% { transform: translate(-52%, -50%); }
+      20%, 40%, 60%, 80% { transform: translate(-48%, -50%); }
     }
   </style>
-  <!-- Add EmailJS Script -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script type="text/javascript">
+
+  <div class="screenshot-modal" id="screenshotModal">
+    <div class="screenshot-modal-content">
+      <h2>⚠️ Warning: Screenshot Detected!</h2>
+      <p>Taking screenshots of this website is not permitted. This incident has been logged.</p>
+      <p>Please respect the content protection measures.</p>
+      <button onclick="closeScreenshotModal()">I Understand</button>
+    </div>
+  </div>
+
+  <script>
+    // Screenshot Protection System
     (function() {
-      // Initialize EmailJS with your public key
-      emailjs.init("qtJnyYk-B_3ESvkA6");
+      const modal = document.getElementById('screenshotModal');
+      let screenshotAttempts = 0;
+      const maxAttempts = 3;
+      let modalTimeout;
+
+      function showScreenshotWarning() {
+        // Show modal
+        modal.style.display = 'block';
+        
+        // Show alert
+        alert('⚠️ WARNING: Screenshots are not allowed on this website!');
+        
+        // Clear any existing timeout
+        if (modalTimeout) {
+          clearTimeout(modalTimeout);
+        }
+
+        // Auto-hide modal after 5 seconds
+        modalTimeout = setTimeout(() => {
+          closeScreenshotModal();
+        }, 5000);
+
+        // Track attempts
+        screenshotAttempts++;
+        if (screenshotAttempts >= maxAttempts) {
+          document.body.style.filter = 'blur(10px)';
+          setTimeout(() => {
+            document.body.style.filter = 'none';
+            screenshotAttempts = 0;
+          }, 5000);
+        }
+
+        // Clear clipboard
+        navigator.clipboard.writeText('Screenshots are not allowed on this website.');
+      }
+
+      window.closeScreenshotModal = function() {
+        modal.style.display = 'none';
+      };
+
+      // Screenshot Detection
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'PrintScreen' || 
+            (e.metaKey && e.shiftKey && e.key === 's') ||
+            (e.ctrlKey && e.shiftKey && e.key === 's') ||
+            (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4')) ||
+            (e.ctrlKey && e.key === 'p')) {
+          e.preventDefault();
+          showScreenshotWarning();
+          return false;
+        }
+      });
+
+      // Prevent right-click
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        showScreenshotWarning();
+        return false;
+      });
+
+      // Prevent copy
+      document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        showScreenshotWarning();
+        return false;
+      });
+
+      // Detect DevTools
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.key === 'u')) {
+          e.preventDefault();
+          showScreenshotWarning();
+          return false;
+        }
+      });
+
+      // Detect visibility change
+      document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+          showScreenshotWarning();
+        }
+      });
+
+      // Click outside modal to close
+      window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeScreenshotModal();
+        }
+      });
     })();
   </script>
 </head>
 
-<body>
+<body onload="initScreenshotProtection()">
+  <style>
+    #screenshotWarning {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ff0000;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 999999;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #screenshotWarning.show {
+      opacity: 1;
+    }
+
+    #screenshotWarning.hide {
+      opacity: 0;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translate(-50%, -50%); }
+      10%, 30%, 50%, 70%, 90% { transform: translate(-52%, -50%); }
+      20%, 40%, 60%, 80% { transform: translate(-48%, -50%); }
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+  </style>
+
+  <div id="screenshotWarning">
+    <h2 style="margin: 0 0 10px 0;">⚠️ Screenshot Detected!</h2>
+    <p style="margin: 0;">Screenshots are not permitted on this website.</p>
+  </div>
+
+  <script>
+    function initScreenshotProtection() {
+      const warningDiv = document.getElementById('screenshotWarning');
+      let screenshotCount = 0;
+      let warningTimeout;
+      
+      function showWarning() {
+        // Clear any existing timeout
+        if (warningTimeout) {
+          clearTimeout(warningTimeout);
+        }
+        
+        // Show warning with animation
+        warningDiv.style.display = 'block';
+        warningDiv.classList.add('shake');
+        
+        // Force reflow to restart animation if already showing
+        void warningDiv.offsetWidth;
+        
+        // Show with fade in
+        requestAnimationFrame(() => {
+          warningDiv.classList.add('show');
+        });
+
+        screenshotCount++;
+        
+        if (screenshotCount >= 3) {
+          document.body.style.filter = 'blur(20px)';
+          setTimeout(() => {
+            document.body.style.filter = 'none';
+            screenshotCount = 0;
+          }, 4000);
+        }
+
+        // Set timeout to hide warning
+        warningTimeout = setTimeout(() => {
+          warningDiv.classList.remove('show');
+          warningDiv.classList.add('hide');
+          
+          // Remove display:none after fade out animation
+          setTimeout(() => {
+            warningDiv.style.display = 'none';
+            warningDiv.classList.remove('hide', 'shake');
+          }, 500);
+        }, 4000);
+      }
+
+      window.addEventListener('keyup', function(e) {
+        if (e.key === 'PrintScreen') {
+          showWarning();
+        }
+      });
+
+      window.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && 
+            (e.key === 'S' || e.key === 's' || e.key === '3' || e.key === '4' || e.key === '5')) {
+          e.preventDefault();
+          showWarning();
+          return false;
+        }
+      });
+
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        showWarning();
+        return false;
+      });
+
+      document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        showWarning();
+        return false;
+      });
+
+      const style = document.createElement('style');
+      style.textContent = `
+        * {
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          user-select: none !important;
+        }
+        
+        img {
+          -webkit-user-drag: none !important;
+          -khtml-user-drag: none !important;
+          -moz-user-drag: none !important;
+          -o-user-drag: none !important;
+          pointer-events: none !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScreenshotProtection);
+    } else {
+      initScreenshotProtection();
+    }
+  </script>
+
   <!-- Navigation -->
   <nav class="navbar">
     <ul class="nav-links">
@@ -3279,16 +3616,172 @@
     });
   </script>
 
+  <script>
+    // Screenshot Protection System
+    (function() {
+      // Create warning popup element
+      const warningPopup = document.createElement('div');
+      warningPopup.style.cssText = `
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #ff3b3b;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        z-index: 999999;
+        text-align: center;
+        animation: shake 0.5s ease-in-out;
+      `;
+      warningPopup.innerHTML = `
+        <h3 style="margin: 0 0 10px 0; font-size: 1.5em;">⚠️ Screenshot Detected!</h3>
+        <p style="margin: 0; font-size: 1.1em;">Screenshots are not allowed on this website.</p>
+      `;
+      document.body.appendChild(warningPopup);
+
+      // Add shake animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes shake {
+          0%, 100% { transform: translate(-50%, -50%); }
+          10%, 30%, 50%, 70%, 90% { transform: translate(-52%, -50%); }
+          20%, 40%, 60%, 80% { transform: translate(-48%, -50%); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      let screenshotAttempts = 0;
+      const maxAttempts = 3;
+
+      function showWarning() {
+        warningPopup.style.display = 'block';
+        setTimeout(() => {
+          warningPopup.style.display = 'none';
+        }, 3000);
+      }
+
+      function handleScreenshotAttempt() {
+        screenshotAttempts++;
+        showWarning();
+        
+        // Clear clipboard
+        navigator.clipboard.writeText('Screenshots are disabled on this site.');
+        
+        if (screenshotAttempts >= maxAttempts) {
+          // Apply temporary blur effect
+          document.body.style.filter = 'blur(5px)';
+          setTimeout(() => {
+            document.body.style.filter = 'none';
+            screenshotAttempts = 0;
+          }, 5000);
+        }
+      }
+
+      // Detect Print Screen
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'PrintScreen' || 
+            (e.metaKey && e.shiftKey && e.key === 's') || // Cmd+Shift+S
+            (e.ctrlKey && e.shiftKey && e.key === 's') || // Ctrl+Shift+S
+            (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4')) || // Mac screenshot
+            (e.ctrlKey && e.key === 'p')) { // Print dialog
+          e.preventDefault();
+          handleScreenshotAttempt();
+          return false;
+        }
+      });
+
+      // Prevent right-click
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        handleScreenshotAttempt();
+        return false;
+      });
+
+      // Prevent copy
+      document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        handleScreenshotAttempt();
+        return false;
+      });
+
+      // Prevent selection
+      document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+
+      // Prevent drag and drop
+      document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+
+      // Add CSS protection
+      const protectionStyles = document.createElement('style');
+      protectionStyles.textContent = `
+        * {
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          user-select: none !important;
+        }
+        
+        img, video {
+          -webkit-user-drag: none !important;
+          -khtml-user-drag: none !important;
+          -moz-user-drag: none !important;
+          -o-user-drag: none !important;
+          user-drag: none !important;
+          pointer-events: none !important;
+        }
+        
+        body {
+          -webkit-touch-callout: none !important;
+          -webkit-tap-highlight-color: transparent !important;
+        }
+      `;
+      document.head.appendChild(protectionStyles);
+
+      // Detect DevTools (F12)
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.key === 'u')) {
+          e.preventDefault();
+          handleScreenshotAttempt();
+          return false;
+        }
+      });
+
+      // Additional protection for mobile devices
+      window.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) {
+          e.preventDefault(); // Prevent pinch zoom
+        }
+      }, { passive: false });
+
+      // Detect visibility change (for screenshot attempts)
+      document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+          handleScreenshotAttempt();
+        }
+      });
+
+      // Monitor clipboard access
+      function monitorClipboard() {
+        if (navigator.clipboard) {
+          const originalWriteText = navigator.clipboard.writeText;
+          navigator.clipboard.writeText = function() {
+            handleScreenshotAttempt();
+            return originalWriteText.apply(this, arguments);
+          };
+        }
+      }
+      monitorClipboard();
+    })();
+  </script>
 </body></html>
-
-
-
-
-
-
-
-
-
-
-
-
